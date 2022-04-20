@@ -13,32 +13,58 @@ public class TaxFunction {
 	 * Jika pegawai sudah memiliki anak maka penghasilan tidak kena pajaknya ditambah sebesar Rp 4.500.000 per anak sampai anak ketiga.
 	 * 
 	 */
-	
-	
-	public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking, int deductible, boolean isMarried, int numberOfChildren) {
-		
-		int tax = 0;
-		
-		if (numberOfMonthWorking > 12) {
-			System.err.println("More than 12 month working per year");
-		}
-		
-		if (numberOfChildren > 3) {
-			numberOfChildren = 3;
-		}
-		
-		if (isMarried) {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - (54000000 + 4500000 + (numberOfChildren * 1500000))));
-		}else {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - 54000000));
-		}
-		
-		if (tax < 0) {
-			return 0;
-		}else {
-			return tax;
-		}
-			 
+
+public static class TaxCalculator {
+    static void calculate() {
+
+        final double RATE1 = 0.10;
+        final double RATE2 = 0.15;
+        final double RATE3 = 0.30;
+        final double RATE1_SINGLE_LIMIT = 0;
+        final double RATE2_COHABITATING_LIMIT = 20000;
+        final double RATE3_COHABITATING_LIMIT = 50000;
+        double tax = 0;
+        Scanner in = new Scanner(System.in);
+        //Enter Income
+        System.out.print("Silakan masukkan penghasilan Anda: ");
+        double income = in.nextDouble();
+        in.nextLine();
+
+        System.out.print("Masukkan 'S' untuk lajang, 'M' untuk menikah, atau 'C' untuk hidup bersama: ");
+        String maritalStatus = in.next();
+        in.nextLine();
+
+        //Calculate Taxes
+
+        if (maritalStatus.equals("S") && income > RATE1_SINGLE_LIMIT) {
+        } else if (maritalStatus.equals("C") && income <= RATE2_COHABITATING_LIMIT) {
+            tax = RATE1 * income;
+        } else if (maritalStatus.equals("C") && income <= RATE3_COHABITATING_LIMIT) {
+            tax = RATE2 * income;
+        } else {
+            tax = RATE3 * income;
+        }
+
+        System.out.print("Pajak Anda adalah: " + tax);
+
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String newResponse = "";
+        do {
+            calculate();
+            System.out.println();
+            System.out.println("Ada tanggapan lain?. Silakan masukkan 'Y' untuk ya, atau 'N' untuk tidak: ");
+            newResponse = in.next();
+            in.nextLine();
+        } while (newResponse.equals("Y"));
+
+    }
+}
+
+	public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int monthWorkingInYear,
+			int annualDeductible, boolean equals, int size) {
+		return 0;
 	}
-	
 }
