@@ -1,5 +1,7 @@
 package lib;
 
+import java.util.Scanner;
+
 public class TaxFunction {
 
 	
@@ -24,41 +26,42 @@ public static class TaxCalculator {
         final double RATE2_COHABITATING_LIMIT = 20000;
         final double RATE3_COHABITATING_LIMIT = 50000;
         double tax = 0;
-        Scanner in = new Scanner(System.in);
-        //Enter Income
-        System.out.print("Silakan masukkan penghasilan Anda: ");
-        double income = in.nextDouble();
-        in.nextLine();
+        try (Scanner in = new Scanner(System.in)) {
+			//Enter Income
+			System.out.print("Silakan masukkan penghasilan Anda: ");
+			double income = in.nextDouble();
+			in.nextLine();
 
-        System.out.print("Masukkan 'S' untuk lajang, 'M' untuk menikah, atau 'C' untuk hidup bersama: ");
-        String maritalStatus = in.next();
-        in.nextLine();
+			System.out.print("Masukkan 'S' untuk lajang, 'M' untuk menikah, atau 'C' untuk hidup bersama: ");
+			String maritalStatus = in.next();
+			in.nextLine();
 
-        //Calculate Taxes
+			//Calculate Taxes
 
-        if (maritalStatus.equals("S") && income > RATE1_SINGLE_LIMIT) {
-        } else if (maritalStatus.equals("C") && income <= RATE2_COHABITATING_LIMIT) {
-            tax = RATE1 * income;
-        } else if (maritalStatus.equals("C") && income <= RATE3_COHABITATING_LIMIT) {
-            tax = RATE2 * income;
-        } else {
-            tax = RATE3 * income;
-        }
-
+			if (maritalStatus.equals("S") && income > RATE1_SINGLE_LIMIT) {
+			} else if (maritalStatus.equals("C") && income <= RATE2_COHABITATING_LIMIT) {
+			    tax = RATE1 * income;
+			} else if (maritalStatus.equals("C") && income <= RATE3_COHABITATING_LIMIT) {
+			    tax = RATE2 * income;
+			} else {
+			    tax = RATE3 * income;
+			}
+		}
         System.out.print("Pajak Anda adalah: " + tax);
 
     }
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String newResponse = "";
-        do {
-            calculate();
-            System.out.println();
-            System.out.println("Ada tanggapan lain?. Silakan masukkan 'Y' untuk ya, atau 'N' untuk tidak: ");
-            newResponse = in.next();
-            in.nextLine();
-        } while (newResponse.equals("Y"));
+        try (Scanner in = new Scanner(System.in)) {
+			String newResponse = "";
+			do {
+			    calculate();
+			    System.out.println();
+			    System.out.println("Ada tanggapan lain?. Silakan masukkan 'Y' untuk ya, atau 'N' untuk tidak: ");
+			    newResponse = in.next();
+			    in.nextLine();
+			} while (newResponse.equals("Y"));
+		}
 
     }
 }
